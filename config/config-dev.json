@@ -1,0 +1,17 @@
+{
+    "app": {
+        "domain" : "127.0.0.1",
+        "port": 3200
+    },
+    "session" : {
+        "secret" : "mysession"
+    },
+    "db": {
+        "dialect" : "sqlite",
+        "domain" : "localhost",
+        "name" : "tpfinal_dev",
+        "user" : "",
+        "pass" : "",
+        "omitNull": true
+    }
+}
