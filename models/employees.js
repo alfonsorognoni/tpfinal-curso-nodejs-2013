@@ -1,24 +1,34 @@
-var Sequelize = require('sequelize')
+var sequelize = module.parent.exports.dbConn
+	,	Sequelize = require('sequelize-sqlite').sequelize
 	, crypto = require('crypto');
 
 module.exports = sequelize.define('Employees', {
-	nombre: Sequelize.String,
-	apellido: Sequelize.String,
+	idEmployee: {
+		type: Sequelize.INTEGER,
+		primaryKey: true,
+		autoIncrement: true
+	},
+	nombre: Sequelize.STRING,
+	apellido: Sequelize.STRING,
 	email: {
-		type: Sequelize.String,
+		type: Sequelize.STRING,
 		validate: {
 			isEmail: true
 		}
 	},
 	hashed_password: {
-		type: Sequelize.String,
+		type: Sequelize.STRING,
 		allowNull: false
 	}
 },{
 	instanceMethods: {
-		authenticate: function(password){
-			console.log("==>", crypto.createHash('md5').update(password).digest("hex") === this.password);
-    	return crypto.createHash('md5').update(password).digest("hex") === this.password;
+		buildHash: function(hashed_password) {
+			console.log("==>", crypto.createHash('md5').update(this.hashed_password).digest("hex"));
+			return crypto.createHash('md5').update(this.hashed_password).digest("hex");
+		},
+		authenticate: function(hashed_password){
+			console.log("==>", crypto.createHash('md5').update(this.hashed_password).digest("hex") === this.hashed_password);
+    	return crypto.createHash('md5').update(this.hashed_password).digest("hex") === this.hashed_password;
 		}
 	}
 });

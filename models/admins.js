@@ -23,9 +23,13 @@ module.exports = sequelize.define('Administrators', {
 	}
 },{
 	instanceMethods: {
+		buildHash: function(hashed_password) {
+			console.log("==>", crypto.createHash('md5').update(this.hashed_password).digest("hex"));
+			return crypto.createHash('md5').update(this.hashed_password).digest("hex");
+		},
 		authenticate: function(hashed_password){
-			console.log("==>", crypto.createHash('md5').update(hashed_password).digest("hex") === this.hashed_password);
-    	return crypto.createHash('md5').update(hashed_password).digest("hex") === this.hashed_password;
+			console.log("==>", crypto.createHash('md5').update(this.hashed_password).digest("hex") === this.hashed_password);
+    	return crypto.createHash('md5').update(this.hashed_password).digest("hex") === this.hashed_password;
 		}
 	}
 });
