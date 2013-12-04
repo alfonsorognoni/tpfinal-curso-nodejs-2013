@@ -33,14 +33,19 @@ describe('Model test Employees', function(){
 				var idEmployee = employee.idEmployee;
 				console.log(idEmployee);
 				done();
-			}).error(function() {
+			}).error(function(){
 				throw new Error('No se pudo crear Empleado');
 			});
 		});
 
-		it('Obtener Empleados', function() {
-			
-		})
+		it('Obtener Empleados', function(done) {
+			Employees.findAll().success(function(empleados){
+				console.log(JSON.parse(JSON.stringify(empleados)));
+				done();
+			}).error(function(){
+				throw new Error('Falló busqueda de emplados');
+			});
+		});
 
 	});
 
