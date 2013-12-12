@@ -6,7 +6,8 @@
 var express = require('express')
 	, config = require('./config/config')
 	, utils = require('./utils')
-	, passport = require('passport');
+	, passport = require('passport')
+	, LocalStrategy = require('passport-local').Strategy;
 var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
@@ -15,7 +16,7 @@ var path = require('path');
 /* --- dbConnection --- */
 var dbConn = exports.dbConn = utils.dbConnection(config.db.domain,config.db.name,config.db.user,config.db.pass,config.db.dialect);
 
-var app = express();
+var app = exports.app = express();
 
 // all environments
 app.set('port', process.env.PORT || 3200);
@@ -36,9 +37,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
-
-app.get('/', routes.index);
-app.get('/users', user.list);
+/**
+* Passport Auth Strategy
+*/
+require('./authpassport');
+/**
+* Routes
+*/
+require('./routes/main');
+// Passport Auth Routes
+require('./routes/auth');
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

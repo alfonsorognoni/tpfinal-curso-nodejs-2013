@@ -1,5 +1,6 @@
 var app = module.parent.exports.app
-  , Personas = require('../models/personas.js')
+  , Employees = require('../models/employees.js')
+  , Admins = require('../models/admins.js')
   , adminAuth;
 
 /**
@@ -7,14 +8,14 @@ var app = module.parent.exports.app
  */
 adminAuth = function(req, res, next){
     //authorize role
-    console.log(req.user)
+    c//onsole.log(req.user)
     if(typeof req.user != "undefined"){
-	console.log(req.user);
+	//console.log(req.user);
 	res.locals.user = req.user;
         next();
     }else{
         //Not authorized go to the login form
-	console.log(req.user);
+	//console.log(req.user);
 	res.locals.user = req.user;
         res.redirect('/admin');
     }
@@ -25,8 +26,8 @@ adminAuth = function(req, res, next){
  */
 
 app.get('/', adminAuth, function(req, res){
-  Personas.buscarAlumnos(function(pers){
-    res.render('index', { title: 'Listado', obj: pers });
+  Employees.buscarEmployees(function(emp){
+    res.render('index', { title: 'Listado', obj:emp });
   });
 });
 
