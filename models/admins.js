@@ -1,24 +1,25 @@
 var sequelize = module.parent.exports.dbConn
-	//,	Sequelize = require('sequelize-sqlite').sequelize
+	,	Sequelize = require('sequelize-sqlite').sequelize
 	, crypto = require('crypto');
+	//console.log( module.parent.exports.dbConn);
 
 module.exports = sequelize.define('Administrators', {
 	idAdmin: {
-		type: sequelize.INTEGER,
+		type: Sequelize.INTEGER,
 		primaryKey: true,
 		autoIncrement: true
 	},
-	name: sequelize.STRING,
-	username: sequelize.STRING,
-	role: sequelize.STRING,
+	name: Sequelize.STRING,
+	username: Sequelize.STRING,
+	role: Sequelize.STRING,
 	email: {
-		type: sequelize.STRING,
+		type: Sequelize.STRING,
 		validate: {
 			isEmail: true
 		}
 	},
 	hashed_password: {
-		type: sequelize.STRING,
+		type: Sequelize.STRING,
 		allowNull: false
 	}
 },{

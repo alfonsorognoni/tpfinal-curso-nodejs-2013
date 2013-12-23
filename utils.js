@@ -1,5 +1,4 @@
 var Sequelize = require('sequelize-sqlite').sequelize;
-var sqlite    = require('sequelize-sqlite').sqlite;
 
 exports.dbConnection = function(dbname, dbuser, dbpass, dbpath, dialect, omitNull){
 

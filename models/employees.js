@@ -1,11 +1,11 @@
-var sequelize = exports.dbConn= module.parent.exports.dbConn
-	//,	Sequelize = require('sequelize-sqlite').sequelize
+var sequelize = module.parent.exports.dbConn
+	,	Sequelize = require('sequelize-sqlite').sequelize
 	, crypto = require('crypto');
-	console.log( module.parent);
+	//console.log( module.parent);
 
 module.exports = sequelize.define('Employees', {
 	idEmployee: {
-		type: sequelize.INTEGER,
+		type: Sequelize.INTEGER,
 		primaryKey: true,
 		autoIncrement: true
 	},

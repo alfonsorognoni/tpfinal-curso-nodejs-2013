@@ -1,6 +1,9 @@
 var app = module.parent.exports.app
-  , Employees = require('../models/employees.js')
-  , Admins = require('../models/admins.js')
+  , config = module.parent.exports.config
+  , dbConn = exports.dbConn = module.parent.exports.dbConn
+  , Admins = require('../models/admins')
+  , Employees = require('../models/employees')
+  
   , adminAuth;
 
 /**
@@ -8,7 +11,7 @@ var app = module.parent.exports.app
  */
 adminAuth = function(req, res, next){
     //authorize role
-    c//onsole.log(req.user)
+    //console.log(req.user)
     if(typeof req.user != "undefined"){
 	//console.log(req.user);
 	res.locals.user = req.user;
@@ -16,7 +19,7 @@ adminAuth = function(req, res, next){
     }else{
         //Not authorized go to the login form
 	//console.log(req.user);
-	res.locals.user = req.user;
+	//res.locals.user = req.user;
         res.redirect('/admin');
     }
 }
