@@ -1,7 +1,7 @@
 var passport = require('passport')   
   , LocalStrategy = require('passport-local').Strategy
   , dbConn  = exports.dbConn = module.parent.exports.dbConn
-  , Administrador = require('./models/admins.js');
+  , Administrator = require('./models/admins.js');
   
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -11,22 +11,21 @@ passport.deserializeUser(function(user, done) {
   done(null, user);
 });
 
-passport.use('loginAdministradores', new LocalStrategy(
+passport.use('loginAdmin', new LocalStrategy(
   {
     usernameField: 'email',
-    passwordField: 'hashed_password'
+    passwordField: 'password'
   },
-  function(username, hashed_password, done) {
-    console.log("llega");
-    Administrador.findOne({ email:username }, function(err, user) {
-      if (err) { return done(err); }
+  function(username, password, done) {
+    Administrator.find({ where : { email: username }}).success(function(user) {
       if (!user) {
         return done(null, false, { message: 'Incorrect username.' });
       }
-      if (!user.authenticate(hashed_password)) {
+      if (!user.authenticate(password)) {
+        console.log("user auth failure");
         return done(null, false, { message: 'Incorrect password.' });
       }
-      console.log("llegai 2");
+      console.log("user auth success");
       return done(null, user);
     });
   }

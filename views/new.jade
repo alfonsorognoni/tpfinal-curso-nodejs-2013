@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  form#login(method="post",action="")
+    h1= title
+    label(for='name') Nombre
+    input#name(name='name', placeholder='nombre', value='')
+    label(for='lastname') Apellido
+    input#lastname(name='lastname', placeholder='apellido', value='')
+    label(for='email') E-Mail
+    input#email(name='email', placeholder='email', value='')
+    label(for='password') Password
+    input#pwd(name='password', placeholder='Password', value='', type='password')
+    label(for='confirm') Confirm Password
+    input#confirm(name='confirm', placeholder='Confirm Password', value='', type='password')
+    input#send(type='submit', value='Log In')

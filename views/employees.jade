@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  table
+    tr
+      th Id
+      th Nombre
+      th Apellido
+      th E-mail
+      th Options
+    - if (empleados)
+      - empleados.forEach(function(empleado,i){
+        tr
+          td #{empleado['idEmployee']}
+          td #{empleado['nombre']}
+          td #{empleado['apellido']}
+          td #{empleado['email']}
+          td
+            a(href="/panel/employees/edit/#{empleado['idEmployee']}") Edit
+            &nbsp; | &nbsp;
+            a(href="/panel/employees/delete/#{empleado['idEmployee']}") Delete
+      - })

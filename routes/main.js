@@ -13,7 +13,7 @@ adminAuth = function(req, res, next){
     //authorize role
     //console.log(req.user)
     if(typeof req.user != "undefined"){
-	//console.log(req.user);
+	console.log(req.user);
 	res.locals.user = req.user;
         next();
     }else{
@@ -28,36 +28,65 @@ adminAuth = function(req, res, next){
  * GET 
  */
 
-app.get('/', adminAuth, function(req, res){
-  Employees.buscarEmployees(function(emp){
-    res.render('index', { title: 'Listado', obj:emp });
+app.get('/', function(req, res){
+    res.render('index', { title: 'Employee Wiki', section: 'Welcome', user: req.user});
+});
+
+app.get('/panel', adminAuth, function(req, res){
+  //console.log(Employees.buscarEmployees());
+  Employees.findAll().success(function(empleados){
+
+        console.log(JSON.parse(JSON.stringify(empleados)));
+        res.redirect('/panel/employees');
+        //res.render('employees', { title: 'Employee List', empleados: empleados });
+      });
+    
+  });
+
+
+app.get('/panel/employees', adminAuth, function(req, res){
+  //console.log(Employees.buscarEmployees());
+  Employees.findAll().success(function(empleados){
+
+        console.log(JSON.parse(JSON.stringify(empleados)));
+        res.render('employees', { title: 'Listado', empleados:empleados });;
+      });
+    
+  });
+
+app.get('/panel/employees/new', adminAuth, function(req, res){
+   res.render('new', { title: 'New Employee', obj: {} });
+});
+
+app.post('/panel/employees/new', adminAuth, function(req, res){
+  var hash = Employees.build({hashed_password: req.param('password')}).buildHash();
+  Employees.create({
+    nombre: req.param('name'),
+    apellido: req.param('lastname'),
+    email: req.param('email'),
+    hashed_password: hash
+  }).success(function(emp){
+    res.redirect('/panel/employees');
   });
 });
 
-app.get('/new', adminAuth, function(req, res){
-   res.render('new', { title: 'Nuevo', obj: {} });
-});
-
-app.post('/new', adminAuth, function(req, res){
-  var p = new Personas({nombre: req.body.nombre, cargo: "Alumno"});
-  p.save(function(err, p){
-    res.redirect("/");
+app.get('/panel/employees/delete/:id', adminAuth, function(req, res){
+  Employees.find(req.params.id).success(function(employee){
+    employee.destroy().success(function(){
+      res.redirect("/panel/employees");
+    }).error(function(err) { console.log(err); });
   });
 });
 
-app.get('/delete/:id', adminAuth, function(req, res){
-  Personas.eliminarAlumno(req.params.id, function(){
-    res.redirect("/");
+app.get('/panel/employees/edit/:id', adminAuth, function(req, res){
+  Employees.find(req.params.id).success(function(employee){
+    res.render('edit', { title: 'Editar', employee: employee });
+  }).error(function(){
+    res.redirect('/panel/employees');
   });
 });
 
-app.get('/edit/:id', adminAuth, function(req, res){
-  Personas.obtenerAlumno(req.params.id, function(pers){
-    res.render('edit', { title: 'Editar', obj: pers });
-  });
-});
-
-app.post('/edit/:id', adminAuth, function(req, res){
+app.post('/panel/employees/edit/:id', adminAuth, function(req, res){
   Personas.editarAlumno(req.params.id, req.body.nombre, function(pers){
     res.redirect("/");
   });
@@ -65,7 +94,7 @@ app.post('/edit/:id', adminAuth, function(req, res){
 
 app.get('/admin', function(req, res){
     if(typeof req.user != "undefined"){
-        res.redirect('/');
+        res.redirect('/panel');
     }else{
         res.render('admin', { title: 'Ingreso', obj: {} });
     }

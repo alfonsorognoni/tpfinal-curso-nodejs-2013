@@ -29,8 +29,9 @@ module.exports = sequelize.define('Administrators', {
 			return crypto.createHash('md5').update(this.hashed_password).digest("hex");
 		},
 		authenticate: function(password){
-			console.log("==>", crypto.createHash('md5').update(this.password).digest("hex") === this.password);
-    	return crypto.createHash('md5').update(this.password).digest("hex") === this.password;
+			//console.log("==>", crypto.createHash('md5').update(this.password).digest("hex") === this.password);
+    	//return crypto.createHash('md5').update(this.password).digest("hex") === this.password;
+    	return (this.getDataValue('hashed_password') == crypto.createHash('md5').update(password).digest("hex"));
 		}
 	}
 });
