@@ -3,6 +3,6 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
-  label(for='search') Search
-  input#email(name='search', placeholder='Employee', value='')
-  input#send(type='submit', value='Search')
+  label.form-title(for='search') Search
+  input#email(name='search', placeholder='Employee', value='').form-field
+  input#send(type='submit', value='Search').submit-button

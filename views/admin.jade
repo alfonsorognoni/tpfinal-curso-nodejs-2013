@@ -1,11 +1,11 @@
 extends layout
 
 block content
-  form#login(method="post",action="")
-    h1= title
-    label(for='email') E-Mail
-    input#email(name='email', placeholder='email', value='')
-    label(for='password') Password
-    input#pwd(name='password', placeholder='Password', value='', type='password')
-    input#send(type='submit', value='Log In')
+  form#login(method="post",action="").form-container
+    h1.form-title= title
+    label(for='email').form-title E-Mail
+    input#email(name='email', placeholder='email', value='').form-field
+    label(for='password').form-title Password
+    input#pwd(name='password', placeholder='Password', value='', type='password').form-field
+    input#send(type='submit', value='Log In').submit-button
 

@@ -1,14 +1,14 @@
 extends layout
 
 block content
-  form#login(method="post",action="")
-    h1= title
+  form#login(method="post",action="").form-container
+    h1.form-title= title
     p #{employee.nombre}
-    label(for='name') Nombre
-    input#name(name='name', placeholder='nombre', value=employee.nombre)
-    label(for='lastname') Apellido
-    input#lastname(name='lastname', placeholder='apellido', value=employee.apellido)
-    label(for='email') E-Mail
-    input#email(name='email', placeholder='email', value=employee.email)
-    input#send(type='submit', value='Edit')
-  a(class='cancelar', href='/panel/employees') Cancelar
+    label.form-title(for='name') Nombre
+    input#name(name='name', placeholder='nombre', value=employee.nombre).form-field
+    label.form-title(for='lastname') Apellido
+    input#lastname(name='lastname', placeholder='apellido', value=employee.apellido).form-field
+    label.form-title(for='email') E-Mail
+    input#email(name='email', placeholder='email', value=employee.email).form-field
+    input#send(type='submit', value='Edit').submit-button
+  a(class='cancelar', href='/panel/employees') Cancelar.submit-button
