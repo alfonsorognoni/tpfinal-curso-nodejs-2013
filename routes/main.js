@@ -99,3 +99,9 @@ app.get('/admin', function(req, res){
         res.render('admin', { title: 'Ingreso', obj: {} });
     }
 });
+app.get('/employee/search/:keyword', function(req, res){
+    Employees.findAll({where:["nombre LIKE ? OR apellido LIKE ?", "%"+req.params.keyword+"%", "%"+req.params.keyword+"%"]}).success(function(employees) {
+        var result = employees || [];
+        res.json(result);
+    });
+});
