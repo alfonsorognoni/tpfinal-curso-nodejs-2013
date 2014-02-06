@@ -49,7 +49,7 @@ app.get('/panel/employees', adminAuth, function(req, res){
   Employees.findAll().success(function(empleados){
 
         console.log(JSON.parse(JSON.stringify(empleados)));
-        res.render('employees', { title: 'Listado', empleados:empleados });;
+        res.render('employees', { title: 'Listado', empleados:empleados });
       });
     
   });
@@ -86,15 +86,19 @@ app.get('/panel/employees/edit/:id', adminAuth, function(req, res){
   });
 });
 
-app.post('/panel/employees/edit/:id', adminAuth, function(req, res){
-  Personas.editarAlumno(req.params.id, req.body.nombre, function(pers){
-    res.redirect("/");
-  });
+app.post('/panel/employees/edit/', adminAuth, function(req, res){
+    Employees.update({
+       nombre: req.param('name'),
+       apellido: req.param('lastname'),
+       email: req.param('email')
+    },{idEmployee:req.param('id')}).success(function(emp) {
+          res.redirect('panel/employees');
+    }).error(function(err) { console.log(err); });
 });
 
 app.get('/admin', function(req, res){
     if(typeof req.user != "undefined"){
-        res.redirect('/panel');
+        res.redirect('/panel/employees');
     }else{
         res.render('admin', { title: 'Ingreso', obj: {} });
     }

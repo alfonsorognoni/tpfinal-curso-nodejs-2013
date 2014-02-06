@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  form#login(method="post",action="").form-container
+  form#login(method="post",action="/panel/employees/edit/").form-container
     h1.form-title= title
     p #{employee.nombre}
     label.form-title(for='name') Nombre
@@ -10,5 +10,6 @@ block content
     input#lastname(name='lastname', placeholder='apellido', value=employee.apellido).form-field
     label.form-title(for='email') E-Mail
     input#email(name='email', placeholder='email', value=employee.email).form-field
+    input#id(type='hidden', name='id', value=employee.idEmployee)
     input#send(type='submit', value='Edit').submit-button
-  a(class='cancelar', href='/panel/employees') Cancelar.submit-button
+  a(class='cancelar submit-button', href='/panel/employees') Cancelar

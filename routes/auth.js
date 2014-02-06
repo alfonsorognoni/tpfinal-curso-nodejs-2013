@@ -5,7 +5,7 @@ var app = module.parent.exports.app
  * Authentication routes
  */
 app.post('/admin', 
-	passport.authenticate('loginAdmin', { successRedirect: '/',
+	passport.authenticate('loginAdmin', { successRedirect: '/panel/employees',
 	failureRedirect: '/admin'
 	})
 );
