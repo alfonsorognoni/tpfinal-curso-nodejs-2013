@@ -1,7 +1,9 @@
 extends layout
 
 block content
-  form#login(method="post",action="/panel/employees/edit/").form-container
+  <div class="success_box"></div>
+  <div class="error_box"></div>
+  form#login(method="post",action="/panel/employees/edit/", name="example_form").form-container
     h1.form-title= title
     p #{employee.nombre}
     label.form-title(for='name') Nombre

@@ -35,5 +35,39 @@ $(document).ready(function(){
               });
                                                                                                                                      
         });
+    var validator = new FormValidator('example_form', [{
+        name: 'name',
+        display: 'nombre',    
+        rules: 'required'
+      },{
+        name: 'lastname',
+        display: 'apellido',    
+        rules: 'required'
+      },{
+      name: 'password',
+      rules: 'required'
+      }, {
+          name: 'confirm',
+          display: 'password confirmation',
+          rules: 'required|matches[password]'
+      }, {
+          name: 'email',
+          rules: 'valid_email'
+      }], function(errors) {
+      var SELECTOR_ERRORS = $('.error_box'),
+        SELECTOR_SUCCESS = $('.success_box');
+      if (errors.length > 0) {
+        SELECTOR_ERRORS.empty();
+        var errorString = '';
+        
+        for (var i = 0, errorLength = errors.length; i < errorLength; i++) {
+            SELECTOR_ERRORS.append(errors[i].message + '<br />');
+        }
+        
+        SELECTOR_SUCCESS.css({ display: 'none' });
+        SELECTOR_ERRORS.fadeIn(200);
+    }      
+        
+    });
                                                                    
 });
